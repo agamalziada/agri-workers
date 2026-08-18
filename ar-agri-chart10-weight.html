@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ثقل القطاع الزراعي في الاقتصاد المصري</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--blue:#378ADD;--coral:#D85A30;--teal:#1D9E75;--amber:#BA7517;--gray:#888780;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:"Tajawal",sans-serif;background:#fff;color:#2c2c2a;direction:rtl;}
+  #root{padding:clamp(12px,3vw,20px);}
+  .hdr{border-right:3px solid #1D9E75;padding-right:10px;margin-bottom:10px;}
+  .tag{font-size:clamp(9px,2vw,10px);font-weight:700;letter-spacing:.06em;color:var(--gray);margin-bottom:2px;}
+  .title{font-size:clamp(13px,3.5vw,15px);font-weight:700;line-height:1.4;margin-bottom:2px;}
+  .subtitle{font-size:clamp(11px,2.5vw,12px);color:#5f5e5a;}
+  .callout{background:#f1efe8;border-right:3px solid #1D9E75;padding:8px 11px;font-size:clamp(11px,2.5vw,12px);color:#5f5e5a;line-height:1.6;margin:9px 0;font-style:italic;}
+  .source{font-size:clamp(9px,2vw,10px);color:var(--gray);margin-top:10px;line-height:1.4;text-align:right;}
+  .cards{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
+  .card{flex:1;min-width:min(100px,44%);border-radius:8px;padding:clamp(9px,2.5vw,12px) clamp(10px,3vw,13px);}
+  @media(prefers-color-scheme:dark){
+    body{background:#1a1a18;color:#d3d1c7;}
+    .callout{background:#2c2c2a;color:#b4b2a9;}
+    .subtitle,.source{color:#b4b2a9;}
+  }
+</style>
+</head>
+<body>
+<div id="root">
+  <div class="hdr">
+    <p class="tag">زاوية ثالثة · إنفوجرافيك ⑩ من ⑩</p>
+    <p class="title">ثقل القطاع الزراعي في الاقتصاد المصري</p>
+    <p class="subtitle">الزراعة تُشغّل ربع القوى العاملة وتُسكن نصف المصريين</p>
+  </div>
+  <div class="callout">"الزراعة تُشغّل 25% من القوى العاملة وتُسكن 50% من المصريين — لكن دعمها لا يتجاوز شكارة سماد"</div>
+  
+<div style="position:relative;width:100%;height:clamp(195px,50vw,225px)"><canvas id="c"></canvas></div>
+<div style="margin-top:10px;background:#edf7f3;border-radius:7px;padding:9px 12px">
+  <p style="font-size:clamp(11px,2.8vw,12px);color:#5f5e5a">القطاع يُسهم في <strong style="color:#1D9E75">15%</strong> من الناتج و<strong style="color:#1D9E75">17%</strong> من الصادرات — بينما دعمه لا يتجاوز 3 شكائر سماد للفدان</p>
+</div>
+<script>
+(function(){
+  var dk=matchMedia("(prefers-color-scheme:dark)").matches;
+  var tc=dk?"#b4b2a9":"#5f5e5a",gc=dk?"rgba(255,255,255,.08)":"rgba(0,0,0,.07)";
+  var teal=dk?"#5DCAA5":"#1D9E75",blue=dk?"#85B7EB":"#378ADD",
+      amber=dk?"#FAC775":"#BA7517",coral=dk?"#F0997B":"#D85A30";
+  new Chart(document.getElementById("c"),{type:"bar",
+    data:{
+      labels:[["سكان الريف","(50%)"],["القوى العاملة","(25%)"],["الصادرات","السلعية (17%)"],["الناتج","المحلي (15%)"]],
+      datasets:[{data:[50,25,17,15],backgroundColor:[teal,blue,amber,coral],borderWidth:0,borderRadius:5}]
+    },
+    options:{indexAxis:"y",responsive:true,maintainAspectRatio:false,animation:{duration:1000,easing:"easeOutQuart",delay:function(c){return c.dataIndex*100;}},
+    plugins:{legend:{display:false},tooltip:{backgroundColor:dk?"#2c2c2a":"#fff",borderColor:dk?"rgba(255,255,255,.1)":"rgba(0,0,0,.08)",borderWidth:1,titleColor:dk?"#d3d1c7":"#2c2c2a",bodyColor:tc,padding:10,titleFont:{family:"Tajawal"},bodyFont:{family:"Tajawal"},callbacks:{label:function(c){return c.raw+"% من الإجمالي";}}}},
+    scales:{x:{ticks:{color:tc,font:{size:10,family:"Tajawal"},callback:function(v){return v+"%";}},grid:{color:gc},border:{display:false}},
+    y:{position:"right",ticks:{color:tc,font:{size:9,family:"Tajawal"}},grid:{display:false},border:{display:false}}}}
+  });
+})();
+</script>
+  <p class="source">المصدر: وزارة الزراعة / بيانات رسمية</p>
+</div>
+<script>
+(function(){
+  function notify(){var h=document.getElementById("root").offsetHeight;window.parent.postMessage({type:"chartResize",height:h},"*");}
+  setTimeout(notify,1400);window.addEventListener("resize",notify);
+  try{new ResizeObserver(function(){setTimeout(notify,80);}).observe(document.body);}catch(e){}
+})();
+</script>
+</body></html>
