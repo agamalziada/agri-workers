@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Pesticide Management Levels Across Egyptian Farms</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  :root{--blue:#378ADD;--coral:#D85A30;--teal:#1D9E75;--amber:#BA7517;--gray:#888780;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#fff;color:#2c2c2a;}
+  #root{padding:clamp(12px,3vw,20px);}
+  .hdr{border-left:3px solid #BA7517;padding-left:10px;margin-bottom:10px;}
+  .tag{font-size:clamp(9px,2vw,10px);font-weight:700;letter-spacing:.07em;color:var(--gray);margin-bottom:2px;text-transform:uppercase;}
+  .title{font-size:clamp(13px,3.5vw,15px);font-weight:600;line-height:1.35;margin-bottom:2px;}
+  .subtitle{font-size:clamp(11px,2.5vw,12px);color:#5f5e5a;}
+  .callout{background:#f1efe8;border-left:3px solid #BA7517;padding:8px 11px;font-size:clamp(11px,2.5vw,12px);color:#5f5e5a;line-height:1.55;margin:9px 0;font-style:italic;}
+  .source{font-size:clamp(9px,2vw,10px);color:var(--gray);margin-top:10px;line-height:1.4;}
+  .cards{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
+  .card{flex:1;min-width:min(100px,44%);border-radius:8px;padding:clamp(9px,2.5vw,12px) clamp(10px,3vw,13px);}
+  @media(prefers-color-scheme:dark){
+    body{background:#1a1a18;color:#d3d1c7;}
+    .callout{background:#2c2c2a;color:#b4b2a9;}
+    .subtitle,.source{color:#b4b2a9;}
+  }
+</style>
+</head>
+<body>
+<div id="root">
+  <div class="hdr">
+    <p class="tag">Zawia3 &middot; Chart 9 of 10</p>
+    <p class="title">Pesticide Management Levels Across Egyptian Farms</p>
+    <p class="subtitle">One in four farms uses hazardous or illegal pesticides</p>
+  </div>
+  <div class="callout">"51% of farms use no hazardous pesticides; 23% use moderate/light products; but 26% use highly dangerous or illegal pesticides without adequate safeguards"</div>
+  
+<div style="display:flex;align-items:center;gap:clamp(12px,4vw,20px);flex-wrap:wrap">
+  <div style="position:relative;width:clamp(150px,40vw,170px);height:clamp(150px,40vw,170px);flex-shrink:0"><canvas id="c"></canvas></div>
+  <div id="leg" style="display:flex;flex-direction:column;gap:10px;flex:1;min-width:min(145px,100%)"></div>
+</div>
+<script>
+(function(){
+  var dk=matchMedia("(prefers-color-scheme:dark)").matches;
+  var teal=dk?"#5DCAA5":"#1D9E75",amber=dk?"#FAC775":"#BA7517",coral=dk?"#F0997B":"#D85A30";
+  var labels=["No hazardous pesticides + 4 eco measures","Moderate/light + 2 measures","Hazardous or illegal / no measures"];
+  var values=[51,23,26];
+  var colors=[teal,amber,coral];
+  new Chart(document.getElementById("c"),{type:"doughnut",
+    data:{labels:labels,datasets:[{data:values,backgroundColor:colors,borderWidth:3,borderColor:dk?"#1a1a18":"#fff",hoverOffset:6}]},
+    options:{responsive:true,maintainAspectRatio:false,cutout:"60%",animation:{animateRotate:true,animateScale:true,duration:1000,easing:"easeOutQuart"},
+    plugins:{legend:{display:false},tooltip:{backgroundColor:dk?"#2c2c2a":"#fff",borderColor:dk?"rgba(255,255,255,.1)":"rgba(0,0,0,.08)",borderWidth:1,titleColor:dk?"#d3d1c7":"#2c2c2a",bodyColor:dk?"#b4b2a9":"#5f5e5a",padding:10,callbacks:{label:function(c){return " "+c.label+": "+c.raw+"%";}}}}}
+  });
+  var shortLabels=["No hazardous pesticides","Moderate / light","Hazardous or illegal"];
+  var leg=document.getElementById("leg");
+  shortLabels.forEach(function(l,i){
+    leg.innerHTML+="<div style='display:flex;align-items:center;gap:8px'>"
+      +"<span style='width:10px;height:10px;border-radius:2px;background:"+colors[i]+";flex-shrink:0'></span>"
+      +"<div style='flex:1'><div style='font-size:clamp(10px,2.5vw,11px);color:#5f5e5a;line-height:1.4'>"+l+"</div>"
+      +"<div style='font-size:clamp(16px,4.5vw,20px);font-weight:800;color:"+colors[i]+"'>"+values[i]+"%</div></div></div>";
+  });
+})();
+</script>
+  <p class="source">Source: CAPMAS — Sustainable Development Indicators 2023</p>
+</div>
+<script>
+(function(){
+  function notify(){var h=document.getElementById("root").offsetHeight;window.parent.postMessage({type:"chartResize",height:h},"*");}
+  setTimeout(notify,1400);window.addEventListener("resize",notify);
+  try{new ResizeObserver(function(){setTimeout(notify,80);}).observe(document.body);}catch(e){}
+})();
+</script>
+</body></html>
